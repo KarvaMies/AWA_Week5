@@ -7,13 +7,13 @@ const logger = require('morgan');
 const mongoDB = process.env.MONGO_URL || 'mongodb://localhost:27017/testdb';
 mongoose.connect(mongoDB)
     .then(() => console.log('Connected to MongoDB'))
-    .catch((error) => console.error('Error connecting to MongoDB:', error+));
+    .catch((error) => console.error('Error connecting to MongoDB:', error));
 
 const recipesRouter = require('./routes/recipes');
 
 const app = express();
 
-const port = 5000;
+const port = 3000;
 
 app.use(logger('dev'));
 app.use(express.json());
