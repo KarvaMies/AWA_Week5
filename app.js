@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const mongoDB = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/testdb';
+const mongoDB = 'mongodb://127.0.0.1:27017/testdb';
 mongoose.connect(mongoDB)
     .then(() => console.log('Connected to MongoDB'))
     .catch((error) => console.error('Error connecting to MongoDB:', error));
