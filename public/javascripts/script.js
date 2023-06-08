@@ -40,12 +40,32 @@ document.getElementById('submit').addEventListener('click', () => {
     });
   });
 
+document.getElementById('search-input').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    let name = document.getElementById('search-input').value;
+    fetch(`/recipe/${name}`)
+    .then(response => { 
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Recipe not found lmao');
+      }
+    })
+    .then(recipe => {
+      updateRecipeView(recipe);
+    })
+    .catch(error => {
+      console.log(`Recipe for '${name}' not found`);
+      updateRecipeView(null);
+    });
+  }
+});
 
-fetch('/recipe/Pizza')
-  .then(response => response.json())
-  .then(recipe => {
-    console.log(`recipe: ${recipe}`);
+function updateRecipeView(recipe) {
+  let recipeContainer = document.getElementById("recipe-container");
+  recipeContainer.innerHTML = '';
 
+  if (recipe) {
     var recipeName = document.createElement("h2");
     recipeName.innerText = recipe.name;
 
@@ -69,13 +89,15 @@ fetch('/recipe/Pizza')
       ingredientsList.appendChild(li);
     });
 
-    var recipeContainer = document.getElementById("recipe-container");
+    
     recipeContainer.appendChild(recipeName);
     recipeContainer.appendChild(instructionsHeading);
     recipeContainer.appendChild(instructionsList);
     recipeContainer.appendChild(ingredientsHeading);
     recipeContainer.appendChild(ingredientsList);
-  })
-  .catch(error => {
-    console.error(error);
-  });
+  } else {
+    let notFound = document.createElement("p");
+    notFound.innerText = "Recipe not found";
+    recipeContainer.append(notFound);
+  }
+}
