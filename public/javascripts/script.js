@@ -63,7 +63,7 @@ document.getElementById('search-input').addEventListener('keydown', (event) => {
 
 function updateRecipeView(recipe) {
   let recipeContainer = document.getElementById("container");
-  recipeContainer.innerText = '';
+  recipeContainer.innerHTML = '';
 
   if (recipe) {
     var recipeName = document.createElement("h2");
